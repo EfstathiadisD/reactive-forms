@@ -1,0 +1,127 @@
+<header class="bg-white shadow">
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900">Basic Form</h1>
+  </div>
+</header>
+
+<main>
+  <div class="flex gap-10 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="flex-1">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col gap-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700"
+              >Name</label
+            >
+            <input
+              type="text"
+              placeholder="Name.."
+              formControlName="name"
+              [class.invalid]="name?.dirty && name?.errors?.['userExists']"
+            />
+            <div *ngIf="name?.dirty && name?.errors" class="text-rose-500">
+              <p *ngIf="name?.errors?.['userExist']">
+                User Exist. Try another one!
+              </p>
+              <p *ngIf="name?.errors?.['required']">
+                User cannot be undefined!
+              </p>
+              <p *ngIf="name?.errors?.['pattern']?.['requiredPattern']">
+                Name can contain just String Like characters and dashes.
+              </p>
+            </div>
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Password</label
+            >
+            <input
+              type="password"
+              placeholder="Password.."
+              formControlName="password"
+              [class.invalid]="password?.dirty && password?.errors?.['password']"
+            />
+            <div
+              *ngIf="password?.dirty && password?.errors"
+              class="text-rose-500"
+            >
+              <p
+                *ngIf="password?.errors?.['minlength']?.['requiredLength'] || password?.errors?.['maxlength']?.['requiredLength']"
+              >
+                Password must be between 4 and 12 Characters.
+              </p>
+              <p *ngIf="password?.errors?.['required']">
+                Password cannot be undefined!
+              </p>
+            </div>
+          </div>
+          <div>
+            <label
+              for="confirmPassword"
+              class="block text-sm font-medium text-gray-700"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              placeholder="Confirm Password.."
+              formControlName="confirmPassword"
+              [class.invalid]="confirmPassword?.dirty && confirmPassword?.errors?.['userExists']"
+            />
+            <div
+              *ngIf="confirmPassword?.dirty && confirmPassword?.errors"
+              class="text-rose-500"
+            >
+              <p *ngIf="confirmPassword?.errors?.['matchingRequired']">
+                Password do not match
+              </p>
+              <p *ngIf="confirmPassword?.errors?.['required']">
+                Password confirmation cannot be undefined!
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <input
+              class="mr-2"
+              type="checkbox"
+              formControlName="termsAndServices"
+            />
+            <label for="termsAndServices" class="form-check-label"
+              >Yeah, Yeah I know, just sign me up already</label
+            >
+          </div>
+          <div class="flex gap-2">
+            <button
+              type="button"
+              (click)="onReset()"
+              class="rounded-md outline outline-1 outline-offset-0 outline-indigo-500 text-indigo-500 p-2 w-50"
+            >
+              Reset Form
+            </button>
+            <button
+              type="submit"
+              class="rounded-md bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-300 text-white p-2 w-50"
+              [disabled]="!form.valid"
+            >
+              Submit Form
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="flex-1">
+      <p class="block text-sm font-medium text-gray-700">Form Value:</p>
+      <pre>{{ form.value | json }}</pre>
+      <hr class="my-4" />
+      <p class="block text-sm font-medium text-gray-700">Form Status:</p>
+      <pre>{{ form.status | json }}</pre>
+      <hr class="my-4" />
+      <p class="block text-sm font-medium text-gray-700">Form Error State:</p>
+      <pre>{{ name?.errors | json }}</pre>
+      <pre>{{ password?.errors | json }}</pre>
+      <pre>{{ confirmPassword?.errors | json }}</pre>
+      <pre>{{ termsAndServices?.errors | json }}</pre>
+    </div>
+  </div>
+</main>
