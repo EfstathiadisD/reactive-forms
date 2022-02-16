@@ -160,7 +160,7 @@ export class AdvanceFormComponent {
 
   /** This simulates an sync response. (i.e: APIs, State Updates etc.) */
   private userExists(name: string): Observable<boolean> {
-    return of(this.Users.includes(name)).pipe(delay(500));
+    return of(this.Users.includes(name)).pipe(delay(750));
   }
 
   /** We can create AsyncValidators. It is a higher-order function. */
