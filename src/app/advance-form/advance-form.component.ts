@@ -24,6 +24,7 @@ interface SignUpProps {
 const Patterns = {
   numeric: /^[0-9]+/,
   stringLikeWithSpaces: /^[a-zA-Z0-9 ]*$/,
+  /* Validators.email exists but it is a bit week. This regex gives better error handling */
   email: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/,
   phone: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
 } as const;
@@ -49,7 +50,6 @@ export class Validation {
 @Component({
   selector: 'app-advance-form',
   templateUrl: './advance-form.component.html',
-  styleUrls: ['./advance-form.component.css'],
 })
 export class AdvanceFormComponent {
   /* This is the List of Discount we iterate upon for the Occupation and Users */
@@ -61,7 +61,11 @@ export class AdvanceFormComponent {
     'Sales Representative',
   ];
 
+  /* ---------------------------- */
+
   constructor(private fb: FormBuilder) {}
+
+  /* ---------------------------- */
 
   /* Constructring Form Builder Group */
   public form = this.fb.group(
@@ -88,10 +92,7 @@ export class AdvanceFormComponent {
 
   /* FormBuilder for Email*/
   private getEmail() {
-    return this.fb.control('', [
-      Validators.required,
-      Validators.pattern(Patterns.email),
-    ]);
+    return this.fb.control('', [Validators.required, Validators.email]);
   }
 
   /* FormBuilder for Password*/
@@ -122,6 +123,8 @@ export class AdvanceFormComponent {
   private getTermsAndServices() {
     return this.fb.control([false, [Validators.requiredTrue]]);
   }
+
+  /* ---------------------------- */
 
   /* Accessor for easier targeting in the Controller and Template, for Name */
   public get name() {
@@ -158,6 +161,8 @@ export class AdvanceFormComponent {
     return this.form.get('termsAndServices');
   }
 
+  /* ---------------------------- */
+
   /** This simulates an sync response. (i.e: APIs, State Updates etc.) */
   private userExists(name: string): Observable<boolean> {
     return of(this.Users.includes(name)).pipe(delay(750));
@@ -171,6 +176,8 @@ export class AdvanceFormComponent {
       );
     };
   }
+
+  /* ---------------------------- */
 
   /* Method for Changing the Select */
   public onChange(event: Event) {

@@ -42,8 +42,8 @@
               <p *ngIf="email?.errors?.['required']">
                 Email is required. We need it! We sell your info!
               </p>
-              <p *ngIf="email?.errors?.['pattern']?.['requiredPattern']">
-                Email needs to conform to [name@company.etension]
+              <p *ngIf="email?.errors?.['email']">
+                Email needs to conform to [name@company.extension]
               </p>
             </div>
           </div>
@@ -52,7 +52,7 @@
             <input
               type="password"
               formControlName="password"
-              [class.invalid]="password?.dirty && password?.errors?.['password']"
+              [class.invalid]="password?.dirty && password?.errors"
             />
             <div
               *ngIf="password?.dirty && password?.errors"
@@ -73,7 +73,9 @@
             <input
               type="password"
               formControlName="confirmPassword"
-              [class.invalid]="confirmPassword?.dirty && confirmPassword?.errors?.['userExists']"
+              [class.invalid]="
+                confirmPassword?.dirty && confirmPassword?.errors
+              "
             />
             <div
               *ngIf="confirmPassword?.dirty && confirmPassword?.errors"
