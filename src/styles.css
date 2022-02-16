@@ -18,11 +18,22 @@
   [multiple],
   textarea,
   select {
-    @apply w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-100 focus:ring-indigo-100;
+    @apply w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500;
   }
 
-  [type="checkbox"],
-  [type="radio"] {
+  [type="checkbox"] {
     @apply rounded border-gray-300 text-indigo-500 focus:ring-indigo-500;
+  }
+
+  [type="radio"] {
+    @apply rounded-3xl border-gray-300 text-indigo-500 focus:ring-indigo-500;
+  }
+
+  label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+
+  .invalid {
+    @apply w-full border-gray-300 rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500;
   }
 }

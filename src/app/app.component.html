@@ -1,36 +1,5 @@
 <div class="min-h-full">
-  <nav class="bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <a routerLink="/">
-              <img
-                class="h-8 w-8"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                alt="Workflow"
-              />
-            </a>
-          </div>
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a
-              routerLink="/basic"
-              routerLinkActive="bg-gray-900"
-              class="text-white px-3 py-2 rounded-md text-sm font-medium"
-              >Basic Form</a
-            >
-
-            <a
-              routerLink="/advance"
-              routerLinkActive="bg-gray-900"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >Advance Form</a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <app-advance-form></app-advance-form>
 
   <router-outlet></router-outlet>
 </div>

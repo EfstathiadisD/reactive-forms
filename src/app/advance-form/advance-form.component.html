@@ -1,12 +1,186 @@
-<header class="bg-white shadow">
-  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-gray-900">Advance Form</h1>
-  </div>
-</header>
-<main>
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="px-4 py-6 sm:px-0">
-      <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+<div class="max-w-screen-lg mx-auto p-5">
+  <h1 class="text-3xl font-bold text-gray-900">Reactive Form</h1>
+  <hr class="my-4" />
+</div>
+
+<div class="max-w-screen-lg mx-auto px-5">
+  <div class="flex gap-8">
+    <div class="flex-1 grow">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col gap-4">
+          <div>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              formControlName="name"
+              [class.invalid]="name?.dirty && name?.errors"
+            />
+            <div
+              *ngIf="name?.dirty && name?.errors"
+              class="text-sm text-rose-500"
+            >
+              <p *ngIf="name?.errors?.['userExist']">
+                User Exist. Try another one!
+              </p>
+              <p *ngIf="name?.errors?.['required']">Name is required.</p>
+              <p *ngIf="name?.errors?.['pattern']?.['requiredPattern']">
+                Cannot contain special characters. Just spaces!
+              </p>
+            </div>
+          </div>
+          <div>
+            <label for="name">Email</label>
+            <input
+              type="text"
+              formControlName="email"
+              [class.invalid]="email?.dirty && email?.errors"
+            />
+            <div
+              *ngIf="email?.dirty && email?.errors"
+              class="text-sm text-rose-500"
+            >
+              <p *ngIf="email?.errors?.['required']">
+                Email is required. We need it! We sell your info!
+              </p>
+              <p *ngIf="email?.errors?.['pattern']?.['requiredPattern']">
+                Email needs to conform to [name@company.etension]
+              </p>
+            </div>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              formControlName="password"
+              [class.invalid]="password?.dirty && password?.errors?.['password']"
+            />
+            <div
+              *ngIf="password?.dirty && password?.errors"
+              class="text-rose-500"
+            >
+              <p
+                *ngIf="password?.errors?.['minlength']?.['requiredLength'] || password?.errors?.['maxlength']?.['requiredLength']"
+              >
+                Password must be between 4 and 12 Characters.
+              </p>
+              <p *ngIf="password?.errors?.['required']">
+                Password cannot be undefined!
+              </p>
+            </div>
+          </div>
+          <div>
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              [class.invalid]="confirmPassword?.dirty && confirmPassword?.errors?.['userExists']"
+            />
+            <div
+              *ngIf="confirmPassword?.dirty && confirmPassword?.errors"
+              class="text-rose-500"
+            >
+              <p *ngIf="confirmPassword?.errors?.['matchingRequired']">
+                Password do not match
+              </p>
+              <p *ngIf="confirmPassword?.errors?.['required']">
+                Password confirmation cannot be undefined!
+              </p>
+            </div>
+          </div>
+          <div>
+            <label for="coupon">Coupon</label>
+            <div class="flex gap-4">
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  id="coupon-yes"
+                  value="true"
+                  formControlName="coupon"
+                  [class.invalid]="coupon?.dirty && coupon?.errors"
+                />
+                <label class="ml-2" for="coupon-yes">Yes</label>
+              </div>
+
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  id="coupon-no"
+                  value="false"
+                  formControlName="coupon"
+                  [class.invalid]="coupon?.dirty && coupon?.errors"
+                />
+                <label class="ml-2" for="coupon-no">No</label>
+              </div>
+            </div>
+
+            <div
+              *ngIf="coupon?.dirty && coupon?.errors"
+              class="text-sm text-rose-500"
+            >
+              <!-- No Errors for coupon at this point -->
+            </div>
+          </div>
+          <div>
+            <label for="occupation">Occupation</label>
+            <select (change)="onChange($event)" formControlName="occupation">
+              <option value="" disabled>Choose an Occupation</option>
+              <option
+                *ngFor="let occupation of Occupations"
+                [ngValue]="occupation"
+              >
+                {{ occupation }}
+              </option>
+            </select>
+          </div>
+          <div class="flex items-center">
+            <input
+              class="mr-2"
+              type="checkbox"
+              formControlName="termsAndServices"
+              name="termsAndServices"
+              id="termsAndServices"
+            />
+            <label for="termsAndServices">Yeah I know. Sign me up!</label>
+          </div>
+          <div class="flex flex-grow gap-2">
+            <button
+              type="button"
+              (click)="onReset()"
+              class="rounded-md outline outline-1 outline-offset-0 outline-indigo-500 text-indigo-500 p-2"
+            >
+              Reset Form
+            </button>
+            <button
+              type="submit"
+              class="rounded-md bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-300 text-white p-2"
+              [disabled]="!form.valid"
+            >
+              Submit Form
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex-1">
+      <label class="block text-sm font-medium text-gray-700">Form Value:</label>
+      <pre>{{ form.value | json }}</pre>
+      <hr class="my-4" />
+      <label class="block text-sm font-medium text-gray-700"
+        >Form Status:</label
+      >
+      <pre>{{ form.status | json }}</pre>
+      <hr class="my-4" />
+      <label class="block text-sm font-medium text-gray-700"
+        >Form Error State:</label
+      >
+      <pre>{{ name?.errors | json }}</pre>
+      <pre>{{ email?.errors | json }}</pre>
+      <pre>{{ password?.errors | json }}</pre>
+      <pre>{{ confirmPassword?.errors | json }}</pre>
+      <pre>{{ coupon?.errors | json }}</pre>
+      <pre>{{ occupation?.errors | json }}</pre>
+      <pre>{{ termsAndServices?.errors | json }}</pre>
     </div>
   </div>
-</main>
+</div>

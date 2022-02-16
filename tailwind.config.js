@@ -1,6 +1,10 @@
 module.exports = {
   content: ["./src/app/**/*.{html,ts,js}", "./src/index.html"],
   theme: {
+    container: {
+      padding: "2rem",
+      center: true,
+    },
     extend: {},
   },
   variants: {
